@@ -2,17 +2,6 @@
 <div class="home">
   <h2>Material & Tool Info</h2>
   <form style="width: 90%; padding: 20px; margin: 0 auto;">
-    <span class="label">Select a Material</span>
-    <select v-model="selected" class="round">
-      <option v-for="material in materials" :key= "material.id" :value="material">{{ material.name }}</option>
-    </select>
-    <span class="label">Tool Type</span>
-    <div class="switch">
-      <input v-model="tool" type="radio" id="radio-one" name="switch-one" value="hss" checked />
-      <label for="radio-one">H.S.S.</label>
-      <input v-model="tool" type="radio" id="radio-two" name="switch-one" value="carbide" />
-      <label for="radio-two">Carbide</label>
-    </div>
     <span class="label">Select an Operation</span>
     <select v-model="operation" class="round">
       <option value="face">Face Milling</option>
@@ -24,26 +13,45 @@
       <option value="ream">Reaming</option>
       <option value="counter">Counter-Boring</option>
     </select>
+    <span class="label">Tool Type</span>
+    <div class="switch">
+      <input v-model="tool" type="radio" id="radio-one" name="switch-one" value="hss" checked />
+      <label for="radio-one">H.S.S.</label>
+      <input v-model="tool" type="radio" id="radio-two" name="switch-one" value="carbide" />
+      <label for="radio-two">Carbide</label>
+    </div>
+    <span class="label">Select a Material</span>
+    <select v-model="material" class="round">
+      <option value="aluminum">Aluminum</option>
+      <option value="brass">Brass</option>
+      <option value="bronze">Bronze</option>
+      <option value="bronzeHard">Bronze (Hard)</option>
+      <option value="castSoft">Cast Iron (Soft)</option>
+      <option value="castHard">Cast Iron (Hard)</option>
+      <option value="castChilled">Cast Iron (Chilled)</option>
+      <option value="iron">Malleable Iron</option>
+      <option value="steelSoft">Steel (Soft)</option>
+      <option value="steelMed">Steel (Medium)</option>
+      <option value="steelHard">Steel (Hard)</option>
+    </select>
     <span class="label">Number of Teeth</span>
     <div class="slidecontainer">
-      <span id="teeth">{{ teeth }}</span><input type="range" min="1" max="10" value="1" v-model="teeth" class="slider" id="silder">
+      <span id="teeth">10</span><input type="range" min="1" max="10" value="1" class="slider" id="silder">
     </div>
-    <span class="label">Diameter of Workpiece/Cutter</span>
-    <input :class="{ error: !diameterValid }" type="text" pattern="(\d+[\/\d. ]*|\d)" v-model="diameterString">
-    <button @click.prevent="log" type="button" name="button" :disabled="diameterNotZero">Calculate</button>
+    <span class="label">Diameter</span>
+    <input :class="{ error: diameterValid }" type="text" pattern="(\d+[\/\d. ]*|\d)" v-model="diameter">
+    <button @click.prevent="log" type="button" name="button">Calculate</button>
   </form>
 </div>
 </template>
 
 <script>
-import router from '../router'
-
 export default {
   name: 'home',
-  store: ['operation', 'tool', 'selected', 'materials', 'rpm', 'teeth', 'specificRpm'],
+  store: ['operation', 'tool', 'material', 'materials'],
   data () {
     return {
-      diameterString: '0'
+      diameter: '0'
     }
   },
   methods: {
@@ -64,31 +72,20 @@ export default {
         return NaN
       }
     },
-    RPM: function (sfpm, diameter) {
-      this.rpm.low = Math.round((sfpm[0] * 12) / (Math.PI * diameter))
-      this.rpm.high = Math.round((sfpm[1] * 12) / (Math.PI * diameter))
-      this.specificRpm = this.rpm.low
-      console.log(`low: ${this.rpm.low} high: ${this.rpm.high}`)
-    },
     log: function () {
-      console.log(this.selected.operations[this.operation][this.tool])
-      this.RPM(this.selected.operations[this.operation][this.tool], this.diameterDecimal)
-      router.push('/rpm')
+      console.log(this.materials[this.material][this.operation][this.tool])
     }
   },
   computed: {
     diameterDecimal: function () {
-      return this.convertFraction(this.diameterString)
+      return this.convertFraction(this.diameter)
     },
     diameterValid: function () {
       if (isNaN(this.diameterDecimal)) {
-        return false
-      } else {
         return true
+      } else {
+        return false
       }
-    },
-    diameterNotZero: function () {
-      return ((this.diameterDecimal === 0) || (!this.diameterValid))
     }
   }
 }
@@ -111,7 +108,7 @@ h2 {
 
 input[type="text"],
 select {
-  margin: 10px 0px 20px;
+  margin: 10px 0px 30px;
   padding: 15px;
   font-size: 15px;
   font-weight: bold;
@@ -160,7 +157,7 @@ select.round {
 
 .switch {
   display: flex;
-  margin: 10px 0px 20px;
+  margin: 10px 0px 30px;
   overflow: hidden;
 }
 
@@ -201,15 +198,14 @@ select.round {
 }
 
 #teeth {
-  background-color: #0375FB;
-  color: #fff;
+  background-color: #fff;
   padding: 5px 10px;
   border-radius: 5px;
 }
 
 .slidecontainer {
   width: 100%;
-  margin: 10px 0px 20px;
+  margin: 10px 0px 30px;
 }
 
 .slider {
@@ -245,22 +241,5 @@ input[type="text"] {
 
 .error {
   border: thin solid hsla(360, 100%, 45%, 0.7) !important;
-}
-
-button {
-  width: 100%;
-  background-color: #0375FB;
-  padding: 5%;
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-}
-
-button:disabled {
-  background-color: #e4e4e4;
-  color: rgba(0, 0, 0, 0.6);
 }
 </style>
