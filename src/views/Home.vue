@@ -40,7 +40,7 @@ import router from '../router'
 
 export default {
   name: 'home',
-  store: ['operation', 'tool', 'selected', 'materials', 'rpm', 'teeth', 'specificRpm'],
+  store: ['operation', 'tool', 'selected', 'materials', 'rpm', 'teeth', 'specificRpm', 'angle', 'message', 'diameter'],
   data () {
     return {
       diameterString: '0'
@@ -65,19 +65,27 @@ export default {
       }
     },
     RPM: function (sfpm, diameter) {
+      if (this.operation === 'drill' && this.tool === 'carbide') {
+        this.message = 'Unfortunately we do not have data for carbide drill bits at this time'
+        return
+      }
+      if (this.operation === 'drill') {
+        this.angle.low = this.selected.operations.drill.sfpm.angle[0]
+        this.angle.high = this.selected.operations.drill.sfpm.angle[1]
+      }
       this.rpm.low = Math.round((sfpm[0] * 12) / (Math.PI * diameter))
       this.rpm.high = Math.round((sfpm[1] * 12) / (Math.PI * diameter))
       this.specificRpm = this.rpm.low
-      console.log(`low: ${this.rpm.low} high: ${this.rpm.high}`)
+      this.message = ''
     },
     log: function () {
-      console.log(this.selected.operations[this.operation][this.tool])
-      this.RPM(this.selected.operations[this.operation][this.tool], this.diameterDecimal)
+      this.RPM(this.selected.operations[this.operation].sfpm[this.tool], this.diameterDecimal)
       router.push('/rpm')
     }
   },
   computed: {
     diameterDecimal: function () {
+      this.diameter = this.convertFraction(this.diameterString)
       return this.convertFraction(this.diameterString)
     },
     diameterValid: function () {

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import RpmResults from './views/RpmResults.vue'
+import FeedResults from './views/FeedResults.vue'
 import Angle from './views/Angle.vue'
 import Tap from './views/Tap.vue'
 import Materials from './views/Materials.vue'
@@ -21,6 +22,11 @@ export default new Router({
       path: '/rpm',
       name: 'rpmresults',
       component: RpmResults
+    },
+    {
+      path: '/feed',
+      name: 'feedresults',
+      component: FeedResults
     },
     {
       path: '/angle',

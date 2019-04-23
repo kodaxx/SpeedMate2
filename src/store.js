@@ -7,8 +7,14 @@ export default {
     operations: {
       face: {
         name: 'Face Milling',
-        hss: [600, 1800],
-        carbide: [1000, 2000]
+        sfpm: {
+          hss: [600, 1800],
+          carbide: [1000, 2000]
+        },
+        ipt: {
+          hss: [0.010, 0.022],
+          carbide: [0.012, 0.020]
+        }
       },
       slab: {
         name: 'Slab/Side Milling',
@@ -53,7 +59,16 @@ export default {
     low: 0,
     high: 0
   },
+  angle: {
+    low: 0,
+    high: 0
+  },
+  message: '',
   specificRpm: 0,
+  feed: {
+    low: 0,
+    high: 0
+  },
   materials: {
     aluminum: {
       name: 'Aluminum',
@@ -61,8 +76,14 @@ export default {
       operations: {
         face: {
           name: 'Face Milling',
-          hss: [600, 1800],
-          carbide: [1000, 2000]
+          sfpm: {
+            hss: [600, 1800],
+            carbide: [1000, 2000]
+          },
+          ipt: {
+            hss: [[0.010, 0.022]],
+            carbide: [[0.012, 0.020]]
+          }
         },
         slab: {
           name: 'Slab/Side Milling',
@@ -71,8 +92,14 @@ export default {
         },
         end: {
           name: 'End Milling',
-          hss: [400, 800],
-          carbide: [800, 2000]
+          sfpm: {
+            hss: [400, 800],
+            carbide: [800, 2000]
+          },
+          ipt: {
+            hss: [[0.001, 0.004], [0.002, 0.006], [0.003, 0.008], [0.004, 0.008], [0.005, 0.010]],
+            carbide: [[0.002, 0.004], [0.003, 0.006], [0.004, 0.008], [0.006, 0.009], [0.007, 0.010]]
+          }
         },
         turn: {
           name: 'Turning',
