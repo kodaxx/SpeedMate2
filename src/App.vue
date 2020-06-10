@@ -4,10 +4,10 @@
     <Slide width="250">
       <h2 id="menu">Tools</h2>
       <a @click="navigate('/')"><span>Speeds&nbsp;&amp;&nbsp;Feeds</span></a>
-      <a @click="navigate('#')"><span>Angle&nbsp;Finder</span></a>
-      <a @click="navigate('#')"><span>Tap/Drill&nbsp;Chart</span></a>
+      <a @click="navigate('/angle')"><span>Angle&nbsp;Finder</span></a>
+      <a @click="navigate('/tap')"><span>Tap/Drill&nbsp;Chart</span></a>
       <a @click="navigate('#')"><span>Conversions</span></a>
-      <a @click="navigate('#')"><span>Materials</span></a>
+      <a @click="navigate('/materials')"><span>Materials</span></a>
     </Slide>
     <span id="title">SpeedMate</span>
   </div>

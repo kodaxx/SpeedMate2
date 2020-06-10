@@ -38,8 +38,11 @@ export default {
       },
       drill: {
         name: 'Drilling',
-        hss: [140, 300],
-        angle: [90, 140]
+        sfpm: {
+          hss: [140, 300],
+          carbide: [0, 0],
+          angle: [90, 140]
+        }
       },
       ream: {
         name: 'Reaming',
@@ -113,8 +116,11 @@ export default {
         },
         drill: {
           name: 'Drilling',
-          hss: [140, 300],
-          angle: [90, 140]
+          sfpm: {
+            hss: [140, 300],
+            carbide: [0, 0],
+            angle: [90, 140]
+          }
         },
         ream: {
           name: 'Reaming',

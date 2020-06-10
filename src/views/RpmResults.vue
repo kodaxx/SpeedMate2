@@ -105,7 +105,7 @@ h2 {
 }
 
 .range {
-  height: 15vh;
+  height: 17.5vh;
   border-radius: 5px;
   text-align: center;
   background-color: #fff;

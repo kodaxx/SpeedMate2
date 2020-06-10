@@ -25,9 +25,10 @@ import router from '../router'
 
 export default {
   name: 'feedresults',
-  store: ['specificRpm', 'feed'],
+  store: ['specificRpm', 'feed', 'teeth'],
   methods: {
     navigate: function (string) {
+      this.teeth = 1
       router.push(string)
     }
   }
